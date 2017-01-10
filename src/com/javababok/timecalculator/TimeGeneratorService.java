@@ -1,7 +1,13 @@
 package com.javababok.timecalculator;
-/*
-Mapping all route for the API and link with the APIController.
+
+/**
+ * Mapping all route for the API and link with the APIController.
+ *
+ * @author JavaBabok
+ * @version 1.0
+ * @since 2017-01-07
  */
+
 import com.javababok.timecalculator.controller.APIController;
 import com.javababok.timecalculator.service.APIService;
 

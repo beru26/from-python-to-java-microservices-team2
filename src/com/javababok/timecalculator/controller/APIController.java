@@ -10,6 +10,15 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The APIController gets the json from Google and return the shipping time in Ms
+ * and the status of the shipping if that is possible to the destination.
+ *
+ * @author JavaBabok
+ * @version  1.0
+ * @since 2017-01-07
+ */
+
 
 public class APIController {
 
@@ -26,7 +35,16 @@ public class APIController {
         return this.getTimeInMs(request.params(":destination"));
     }
 
-    // This method create the final json with the output data.
+    /**
+     * This method creates the final json with the output data.
+     *
+     * @param destination
+     * @return json JSONObject with time and status values
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws JSONException
+     */
+
     public JSONObject getTimeInMs(String destination) throws IOException, URISyntaxException, JSONException {
         JSONObject json = new JSONObject();
         String status = checkStatus(destination);
@@ -45,8 +63,17 @@ public class APIController {
         return json;
     }
 
+    /**
+     * This method checks the status and expand it, if not OK (or something else).
+     *
+     * @param destination
+     * @return status or error message
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws JSONException
+     */
+
     public String checkStatus(String destination) throws IOException, URISyntaxException, JSONException {
-        // Check the status and expand it, if no OK (or something else).
         JSONObject routeDetails = getRouteDetails(destination);
         String status = routeDetails.get("status").toString();
         switch (status) {
@@ -60,8 +87,17 @@ public class APIController {
         }
     }
 
+    /**
+     * This method gets the json from Google and return it.
+     *
+     * @param destination
+     * @return JSONObject
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws JSONException
+     */
+
     public JSONObject getRouteDetails(String destination) throws IOException, URISyntaxException, JSONException {
-        // Here get the json from Google and return it.
         JSONObject jsonObject = new JSONObject(apiService.calcTime(ORIGIN, destination));
         JSONObject routeDetailsList = (JSONObject) ((JSONArray) jsonObject.get("rows")).get(0);
         return (JSONObject) ((JSONArray) routeDetailsList.get("elements")).get(0);
